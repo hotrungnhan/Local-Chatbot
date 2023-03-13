@@ -84,10 +84,6 @@ async function chatGpt(messages, user) {
 login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
     if (err) return console.error(err);
     api.listen((err, message) => {
-        if (CHAT_GPT_API_KEY) {
-            api.sendMessage("Ask admin for update valid api key.", message.threadID);
-        }
-
         if (err) {
             console.log(err);
             return;
@@ -95,6 +91,10 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
 
         if (message && message.type != "message") {
             return;
+        }
+        if (!CHAT_GPT_API_KEY) {
+            api.sendMessage("Ask admin for update valid api key.", message.threadID);
+            return
         }
 
         if (message.body == 'bot on') {
