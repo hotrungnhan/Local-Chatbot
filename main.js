@@ -120,7 +120,7 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
             return
         }
 
-        if (state.getBot(message.threadID).status && message.body.split(" ").length < 3) {
+        if (state.getBot(message.threadID) && message.body.split(" ").length < 3) {
             api.sendMessage(`Too less word to answear`, message.threadID);
             return
         }
