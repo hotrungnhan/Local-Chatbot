@@ -30,8 +30,8 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
             await api.sendMessage(m, message.threadID);
             return
         }
-
-        if (!state.getBot(message.threadID)) {
+        const botState = await state.getBot(message.threadID)
+        if (!botState) {
             return
         }
         console.log(message.threadID, " : ", await state.getMode(message.threadID))

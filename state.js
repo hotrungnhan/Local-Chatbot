@@ -27,7 +27,7 @@ module.exports = class State {
         return client.hset(`${threadID}::state`, { "mode": mode });
     }
     getBot(threadID) {
-        return client.hget(`${threadID}::state`, "status");
+        return Boolean(client.hget(`${threadID}::state`, "status"));
     }
     async getConversation(threadID) {
         return (await client.lrange(`${threadID}::conversations`, 0, -1)).map(s => JSON.parse(s))
