@@ -68,14 +68,14 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
             api.sendMessage(`Too less word to answear`, message.threadID);
             return
         }
-        if (state.getBot(message.threadID) && state.getBot(message.threadID) == "draw") {
+        if (state.getMode(message.threadID) == "draw") {
             Draw(message.body).then(img => {
                 api.sendMessage({
                     attachment: img,
                 }, message.threadID);
             })
         }
-        if (state.getBot(message.threadID) && state.getBot(message.threadID) == "chat") {
+        if (state.getMode(message.threadID) == "chat") {
             const myInterval = setInterval(() => api.sendTypingIndicator(message.threadID), 1000);
             state.addConversation(message.threadID, "user", message.body);
             ChatGPT(state.getConversation(message.threadID), message.threadID).then(res => {
