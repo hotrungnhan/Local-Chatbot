@@ -22,7 +22,7 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
         if (message && message.type != "message") {
             return;
         }
-        console.log(message.threadID, " : ", state.getBot(message.threadID))
+        console.log(message.threadID, " : ", await state.getBot(message.threadID))
         if (message.body == 'bot on') {
             const m = `Bot is on now.`
             await state.addConversation(message.threadID, "system", m);
@@ -34,7 +34,7 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
         if (!state.getBot(message.threadID)) {
             return
         }
-        console.log(message.threadID, " : ", state.getMode(message.threadID))
+        console.log(message.threadID, " : ", await state.getMode(message.threadID))
 
         if (message.body == 'bot off') {
             const m = `Bot is off.`

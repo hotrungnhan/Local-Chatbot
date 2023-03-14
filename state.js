@@ -16,9 +16,9 @@ module.exports = class State {
     static MAX_CONVERSATION = 10;
     static REDUCE_RATIO = 0.5;
     setBot(threadID, status = true) {
-        return client.hset(`${threadID}::state`, JSON.stringify({
+        return client.hset(`${threadID}::state`, {
             status: status
-        }));
+        });
     }
     getMode(threadID) {
         return client.hget(`${threadID}::state`, "mode").then(d => d || "chat")
