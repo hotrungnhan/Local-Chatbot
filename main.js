@@ -69,7 +69,7 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
             return
         }
         if (state.getBot(message.threadID) && state.getBot(message.threadID) == "draw") {
-            Draw(message).then(img => {
+            Draw(message.body).then(img => {
                 api.sendMessage({
                     attachment: img,
                 }, message.threadID);
