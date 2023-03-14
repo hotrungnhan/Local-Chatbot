@@ -23,11 +23,6 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
         if (message && message.type != "message") {
             return;
         }
-        if (!CHAT_GPT_API_KEY) {
-            api.sendMessage("Ask admin for update valid api key.", message.threadID);
-            return
-        }
-
         if (message.body == 'bot on') {
             const m = `Bot is on now.`
             state.addConversation(message.threadID, "system", m);
