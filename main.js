@@ -68,7 +68,7 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
             await api.sendMessage(`Too less word to answear`, message.threadID);
             return
         }
-        const botMode = state.getMode(message.threadID)
+        const botMode = await state.getMode(message.threadID)
         if (botMode == "draw") {
             await Draw(message.body).then(img => {
                 api.sendMessage({
