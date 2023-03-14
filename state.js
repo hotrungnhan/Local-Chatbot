@@ -1,9 +1,9 @@
-import { createClient } from 'redis';
+const { createClient } = require("redis")
 const REDIS_URL = process.env.REDIS_URL
 const client = createClient({
     url: REDIS_URL
 });
-await client.connect();
+client.connect().then(() => console.log("redis connected !!!"));
 
 module.exports = class State {
     // [thread: string]: {
