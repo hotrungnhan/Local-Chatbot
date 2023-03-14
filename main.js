@@ -68,14 +68,15 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
             await api.sendMessage(`Too less word to answear`, message.threadID);
             return
         }
-        if (state.getMode(message.threadID) == "draw") {
+        const botMode = state.getMode(message.threadID)
+        if (botMode == "draw") {
             await Draw(message.body).then(img => {
                 api.sendMessage({
                     attachment: img,
                 }, message.threadID);
             })
         }
-        if (state.getMode(message.threadID) == "chat") {
+        if (botMode == "chat") {
             const myInterval = setInterval(() => api.sendTypingIndicator(message.threadID), 1000);
             await state.addConversation(message.threadID, "user", message.body);
             const lastConversation = await state.getConversation(message.threadID)
@@ -90,7 +91,7 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
                 if (err.message == "CHAT_GPT_INVATID_RESPONSE") {
                     await api.sendMessage("Please ask some else question that i can answer !!!", message.threadID);
                 }
-                await api.sendMessage("Chat GPT in stunned by unknown meteorite !!", message.threadID);
+                api.sendMessage("Chat GPT in stunned by unknown meteorite !!", message.threadID);
                 await api.sendMessage(err, message.threadID);
             }).finally(() => clearInterval(myInterval))
         }
