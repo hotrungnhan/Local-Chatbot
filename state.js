@@ -36,7 +36,7 @@ module.exports = class State {
         const listLength = await client.llen(`${threadID}::conversations`);
         if (listLength > this.constructor.MAX_CONVERSATION) {
             // reduce 1/2 conversation;
-            await client.ltrim(`${threadID}::conversations`, parseInt(listLength * this.constructor.REDUCE_RATIO), listLength)
+            await client.ltrim(`${threadID}::conversations`, 0, listLength - parseInt(listLength * this.constructor.REDUCE_RATIO))
         }
         return client.lpush(`${threadID}::conversations`, JSON.stringify({
             role: role,
