@@ -1,7 +1,6 @@
-const login = require("fb-chat-api");
-
-
 require('dotenv').config()
+const login = require("fb-chat-api");
+//
 const State = require("./state")
 const ChatGPT = require("./chat_gpt")
 const Draw = require("./draw")

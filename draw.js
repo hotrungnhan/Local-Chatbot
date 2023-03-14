@@ -6,7 +6,7 @@ const DRAW_CONFIG = {
 const HUGGING_FACE_API_KEY = process.env.HUGGING_FACE_API_KEY || "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"
 async function Draw(propmt) {
     function reqDraw() {
-        return http.post("https://api-inference.huggingface.co/models/prompthero/openjourney", { ...DRAW_CONFIG, inputs: propmt }, {
+        return http.post("https://api-inference.huggingface.co/models/prompthero/openjourney-v2", { ...DRAW_CONFIG, inputs: propmt }, {
             headers: {
                 Authorization: `Bearer ${HUGGING_FACE_API_KEY}`,
 
