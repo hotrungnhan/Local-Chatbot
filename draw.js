@@ -1,6 +1,6 @@
 const axios = require("axios");
 const rateLimit = require("axios-rate-limit");
-const http = rateLimit(axios.create(), { maxRPS: 100 })
+const http = rateLimit(axios.create(), { maxRPS: 1 })
 const DRAW_CONFIG = {
 }
 const HUGGING_FACE_API_KEY = process.env.HUGGING_FACE_API_KEY || "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"
@@ -18,7 +18,6 @@ async function Draw(propmt) {
     return response
 }
 // Draw("girl with celebricate").then(data => {
-//     console.log(data)
 //     const write = fs.createWriteStream("image.png")
 //     data.pipe(write);
 //     return finished(write);

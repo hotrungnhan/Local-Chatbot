@@ -44,13 +44,14 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
             api.sendMessage(m, message.threadID);
             return
         }
-        if (message.body == 'change draw') {
+        if (message.body == 'switch draw') {
             const m = `Switching to draw mode.`
             state.changeMode(message.threadID, "draw")
             api.sendMessage(m, message.threadID);
             return
         }
-        if (message.body == 'change chat') {
+
+        if (message.body == 'stop draw') {
             const m = `Switching to chat mode.`
             state.changeMode(message.threadID, "chat")
             api.sendMessage(m, message.threadID);
