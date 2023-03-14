@@ -1,7 +1,8 @@
 const Redis = require("ioredis").default
 const REDIS_URL = process.env.REDIS_URL
-const client = Redis.createClient({
-    url: REDIS_URL
+const client = new Redis(REDIS_URL)
+client.on("ready", () => {
+    console.log("redis connected !!!");
 })
 module.exports = class State {
     // [thread: string]: {
