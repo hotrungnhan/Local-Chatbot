@@ -78,7 +78,8 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
         if (state.getMode(message.threadID) == "chat") {
             const myInterval = setInterval(() => api.sendTypingIndicator(message.threadID), 1000);
             await state.addConversation(message.threadID, "user", message.body);
-            await ChatGPT(await state.getConversation(message.threadID), message.threadID).then(async res => {
+            const lastConversation = await state.getConversation(message.threadID)
+            await ChatGPT(lastConversation, message.threadID).then(async res => {
                 if (res.content.length > 2000) {
                     res.content.split("\n").map(t => api.sendMessage(t, message.threadID))
                 } else {
