@@ -23,6 +23,7 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
         if (message && message.type != "message") {
             return;
         }
+        console.log(message.threadID, " : ", state.getBot(message.threadID))
         if (message.body == 'bot on') {
             const m = `Bot is on now.`
             state.addConversation(message.threadID, "system", m);
@@ -31,38 +32,42 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
             return
         }
 
-        if (state.getBot(message.threadID) && message.body == 'bot off') {
+        if (!state.getBot(message.threadID)) {
+            return
+        }
+        console.log(message.threadID, " : ", state.getMode(message.threadID))
+
+        if (message.body == 'bot off') {
             const m = `Bot is off.`
             state.addConversation(message.threadID, "system", m);
             state.setBot(message.threadID, false)
             api.sendMessage(m, message.threadID);
             return
         }
-        if (state.getBot(message.threadID) && message.body == 'change draw') {
+        if (message.body == 'change draw') {
             const m = `Switching to draw mode.`
             state.changeMode(message.threadID, "draw")
             api.sendMessage(m, message.threadID);
             return
         }
-        if (state.getBot(message.threadID) && message.body == 'change chat') {
+        if (message.body == 'change chat') {
             const m = `Switching to chat mode.`
             state.changeMode(message.threadID, "chat")
             api.sendMessage(m, message.threadID);
             return
         }
 
-        if (state.getBot(message.threadID) && message.body == 'bot status') {
+        if (message.body == 'bot status') {
             const m = `Bot status is ${state.getBot(message.threadID) ? "on" : "off"}.`
             state.addConversation(message.threadID, "system", m);
             api.sendMessage(m, message.threadID);
             return
         }
 
-        if (state.getBot(message.threadID) && message.body.split(" ").length < 3) {
+        if (message.body.split(" ").length < 3) {
             api.sendMessage(`Too less word to answear`, message.threadID);
             return
         }
-
         if (state.getBot(message.threadID) && state.getBot(message.threadID) == "draw") {
             Draw(message).then(img => {
                 api.sendMessage({
