@@ -30,7 +30,7 @@ module.exports = class State {
         return Boolean(client.hget(`${threadID}::state`, "status"));
     }
     async getConversation(threadID) {
-        return (await client.lrange(`${threadID}::conversations`, 0, -1)).map(s => JSON.parse(s))
+        return (await client.lrange(`${threadID}::conversations`, 0, -1)).map(s => JSON.parse(s)).reverse()
     }
     async addConversation(threadID, role, content) {
         const listLength = await client.llen(`${threadID}::conversations`);
