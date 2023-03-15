@@ -82,7 +82,7 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
             const lastConversation = await state.getConversation(message.threadID)
             await ChatGPT(lastConversation, message.threadID).then(async res => {
                 if (res.content.length > 2000) {
-                    res.content.split("\n").map(t => api.sendMessage(t, message.threadID))
+                    await Promise.all(res.content.split("\n").map(t => api.sendMessage(t, message.threadID)))
                 } else {
                     await state.addConversation(message.threadID, res.role, res.content)
                     await api.sendMessage(res.content, message.threadID);
@@ -91,7 +91,7 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
                 if (err.message == "CHAT_GPT_INVATID_RESPONSE") {
                     await api.sendMessage("Please ask some else question that i can answer !!!", message.threadID);
                 }
-                api.sendMessage("Chat GPT in stunned by unknown meteorite !!", message.threadID);
+                await api.sendMessage("Chat GPT in stunned by unknown meteorite !!", message.threadID);
                 await api.sendMessage(err, message.threadID);
             }).finally(() => clearInterval(myInterval))
         }
