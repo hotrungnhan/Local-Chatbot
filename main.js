@@ -75,6 +75,7 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
                     attachment: img,
                 }, message.threadID);
             })
+            return
         }
         if (botMode == "chat") {
             const myInterval = setInterval(() => api.sendTypingIndicator(message.threadID), 1000);
@@ -94,6 +95,7 @@ login({ appState: JSON.parse(CREDENTIAL) }, {}, (err, api) => {
                 await api.sendMessage("Chat GPT in stunned by unknown meteorite !!", message.threadID);
                 await api.sendMessage(err, message.threadID);
             }).finally(() => clearInterval(myInterval))
+            return
         }
     });
 })
